@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MUNDO CASINO 777</title>
+<meta name="description" content="Portal de MUNDO CASINO 777">
+<meta name="theme-color" content="#fff7fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MC 777">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{--brand:#6e1a52;--brand2:#c2257f;--gold:#d9a520;--ink:#2a1424;--muted:#7a5f72}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden;background:#fff7fb;color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+  /* Fondo claro tipo vidrio */
+  .fondo{position:fixed;inset:0;background:linear-gradient(165deg,#fff7fb 0%,#fde8f3 45%,#f6dcf0 100%);overflow:hidden;z-index:0}
+  .fondo::before,.fondo::after{content:"";position:absolute;border-radius:50%;filter:blur(70px)}
+  .fondo::before{width:70vmax;height:70vmax;background:#f7b9da;opacity:.55;top:-25vmax;left:-25vmax}
+  .fondo::after{width:60vmax;height:60vmax;background:#f3d9a6;opacity:.45;bottom:-22vmax;right:-22vmax}
+  .vidrio{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 10px 30px rgba(194,37,127,.15),inset 0 1px 0 rgba(255,255,255,.9);
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+  .logo{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .logo span{display:block;width:100%;font-weight:800;color:var(--brand2);letter-spacing:.06em;line-height:1;white-space:nowrap}
+  .logo b{display:block;width:100%;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 2px 0 rgba(160,110,10,.25)}
+  .gira{width:26px;height:26px;border-radius:50%;border:3px solid rgba(194,37,127,.18);border-top-color:var(--brand2);animation:g 1s linear infinite}
+  @keyframes g{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.gira{animation-duration:3s}}
+
+  /* Marcos: portal y cada app, uno encima del otro */
+  #marcos{position:fixed;inset:0;z-index:1;padding-top:env(safe-area-inset-top)}
+  #marcos iframe{position:absolute;left:0;right:0;bottom:0;top:env(safe-area-inset-top);width:100%;height:calc(100% - env(safe-area-inset-top));
+    border:0;background:transparent;visibility:hidden}
+  #marcos iframe.on{visibility:visible}
+
+  /* Pantalla de entrada */
+  .capa{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;
+    transition:opacity .35s ease}
+  .capa.fuera{opacity:0;pointer-events:none}
+  #splash{background:radial-gradient(60vmax 60vmax at 0% 0%,rgba(247,185,218,.55),transparent 70%),radial-gradient(50vmax 50vmax at 100% 100%,rgba(243,217,166,.5),transparent 70%),linear-gradient(165deg,#fff7fb 0%,#fde8f3 45%,#f6dcf0 100%)}
+  #splash .ic{width:112px;height:112px;border-radius:30px;gap:6px}
+  #splash .ic span{font-size:10.5px} #splash .ic b{font-size:42px}
+  .pildora{border-radius:99px;padding:8px 18px;font-size:13px;font-weight:800;letter-spacing:.1em;color:var(--brand)}
+  #splashMsg{min-height:20px;font-size:14px;color:var(--muted);text-align:center;max-width:300px}
+  .bt{border:0;border-radius:14px;padding:13px 18px;font:inherit;font-weight:800;font-size:15px;cursor:pointer;width:100%}
+  .oro{background:linear-gradient(135deg,#f1d27f,#d4a238);color:#3a1028;box-shadow:0 6px 16px rgba(201,150,43,.3)}
+  .suave{background:rgba(255,255,255,.7);color:var(--brand2)}
+
+  /* Instalar */
+  #instalar .caja{width:100%;max-width:360px;border-radius:24px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+  #instalar h1{margin:0;font-size:20px;color:var(--brand);text-align:center}
+  #instalar p{margin:0;color:var(--muted);font-size:14px;text-align:center;line-height:1.45}
+  #instalar ol{margin:0;padding-left:22px;font-size:15px;line-height:1.7}
+  #instalar .nota{font-size:12.5px;background:rgba(255,255,255,.6);border-radius:12px;padding:10px 12px;color:var(--muted);line-height:1.45}
+  #instalar .ic{width:84px;height:84px;border-radius:22px;gap:4px;margin:0 auto}
+  #instalar .ic span{font-size:8px} #instalar .ic b{font-size:32px}
+
+  /* Abriendo una app */
+  #abriendo{position:fixed;inset:0;z-index:3;display:none;align-items:center;justify-content:center}
+  #abriendo.si{display:flex}
+  #abriendo .vidrio{border-radius:18px;padding:16px 22px;display:flex;align-items:center;gap:12px;font-weight:700;color:var(--brand)}
+  .oculto{display:none!important}
+</style>
+</head>
+<body>
+<div class="fondo"></div>
+<div id="marcos"></div>
+
+<div id="abriendo"><div class="vidrio"><div class="gira"></div><span>Abriendo…</span></div></div>
+
+<!-- Pantalla de entrada -->
+<div id="splash" class="capa">
+  <div class="ic logo vidrio"><span>MUNDO CASINO</span><b>777</b></div>
+  <div class="pildora vidrio">MUNDO CASINO 777</div>
+  <div class="gira" id="splashGira"></div>
+  <div id="splashMsg"></div>
+  <button id="reintentar" class="bt oro oculto" type="button" style="max-width:240px" onclick="location.reload()">Reintentar</button>
+</div>
+
+<!-- Instalar (celular, cuando se abre en el navegador) -->
+<div id="instalar" class="capa oculto">
+  <div class="caja vidrio">
+    <div class="ic logo vidrio"><span>MUNDO CASINO</span><b>777</b></div>
+    <h1>Instala la app</h1>
+    <p>Queda con su ícono en tu celular y abre a pantalla completa.</p>
+    <div id="pasosIOS" class="oculto">
+      <ol>
+        <li>Toca <b>Compartir</b> <span aria-hidden="true">⬆︎</span> (abajo o arriba en Safari)</li>
+        <li>Elige <b>“Agregar a inicio”</b></li>
+        <li>Toca <b>Agregar</b> y abre la app desde tu pantalla</li>
+      </ol>
+    </div>
+    <div id="pasosAndroid" class="oculto">
+      <button id="bInstalar" class="bt oro oculto" type="button">Instalar app</button>
+      <ol id="pasosAndroidMan">
+        <li>Toca el menú <b>⋮</b> de Chrome</li>
+        <li>Elige <b>“Instalar app”</b> o <b>“Agregar a la pantalla principal”</b></li>
+      </ol>
+    </div>
+    <div class="nota" id="notaWhats">¿Lo abriste desde WhatsApp? Primero toca <b>⋯</b> y elige <b>“Abrir en Safari”</b> o <b>“Abrir en Chrome”</b>.</div>
+    <button class="bt suave" type="button" onclick="seguirNavegador()">Seguir en el navegador ›</button>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  var ua = navigator.userAgent || '';
+  var esIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var esAndroid = /Android/i.test(ua);
+  var esApp = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  var F = {};              // codigo → iframe (el portal es "portal")
+  var actual = 'portal';
+  var pedidoInstalar = null;
+
+  function $(id){ return document.getElementById(id); }
+  function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function conShell(url){ return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'shell=1'; }
+
+  // ---------- Marcos ----------
+  function crearMarco(codigo, src){
+    var f = document.createElement('iframe');
+    f.src = src;
+    f.title = codigo === 'portal' ? 'Portal MUNDO CASINO 777' : codigo;
+    f.setAttribute('allow', 'camera; microphone; geolocation; clipboard-read; clipboard-write; fullscreen');
+    $('marcos').appendChild(f);
+    F[codigo] = f;
+    return f;
+  }
+  function mostrar(codigo){
+    Object.keys(F).forEach(function(k){ F[k].classList.toggle('on', k === codigo); });
+    actual = codigo;
+  }
+  function quitar(codigo){
+    if (codigo === 'portal' || !F[codigo]) return;
+    F[codigo].remove(); delete F[codigo];
+  }
+  // ¿De cuál marco viene el mensaje? (las apps de Google responden desde un marco interno)
+  function marcoDe(w){
+    for (var i = 0; i < 8 && w; i++){
+      for (var k in F){ if (F[k].contentWindow === w) return k; }
+      try{ if (w === w.parent) break; w = w.parent; }catch(e){ break; }
+    }
+    return null;
+  }
+
+  function abrirApp(codigo, url){
+    if (!/^[a-z0-9_]{2,40}$/.test(String(codigo || ''))) return;
+    if (F[codigo]){ mostrar(codigo); history.pushState({ app: codigo }, ''); return; }
+    if (!/^https:\/\/script\.google\.com\//.test(String(url || ''))) return;
+    var f = crearMarco(codigo, conShell(url));
+    $('abriendo').classList.add('si');
+    var listo = function(){ $('abriendo').classList.remove('si'); };
+    f.addEventListener('load', function(){ setTimeout(listo, 300); });
+    setTimeout(listo, 20000);
+    mostrar(codigo);
+    history.pushState({ app: codigo }, '');
+  }
+  function volverPortal(){
+    $('abriendo').classList.remove('si');
+    mostrar('portal');
+  }
+
+  window.addEventListener('message', function(ev){
+    var d = ev.data;
+    if (!d || typeof d !== 'object' || !d.mc777) return;
+    var origen = marcoDe(ev.source);
+    if (!origen) return;   // solo se escucha a nuestros propios marcos
+    if (d.mc777 === 'abrir' && origen === 'portal') abrirApp(d.codigo, d.url);
+    else if (d.mc777 === 'portal') volverPortal();
+    else if (d.mc777 === 'salir'){ if (origen !== 'portal') quitar(origen); volverPortal(); }
+    else if (d.mc777 === 'portalSalir'){ Object.keys(F).forEach(quitar); volverPortal(); }
+  });
+  // Botón "atrás" del celular: desde una app vuelve al portal
+  window.addEventListener('popstate', function(){ if (actual !== 'portal') volverPortal(); });
+
+  // ---------- Arranque ----------
+  function quitarSplash(){ $('splash').classList.add('fuera'); }
+  var arrancado = false;
+  function arrancar(){
+    if (arrancado) return; arrancado = true;
+    $('instalar').classList.add('oculto');
+    $('splash').classList.remove('oculto');
+    if (!/^https:\/\/script\.google\.com\/.+\/exec$/.test(String(window.PORTAL_URL || ''))){
+      $('splashGira').classList.add('oculto');
+      $('splashMsg').textContent = 'Falta el enlace del portal en config.js.';
+      return;
+    }
+    var f = crearMarco('portal', conShell(PORTAL_URL));
+    f.addEventListener('load', function(){ setTimeout(quitarSplash, 500); });
+    mostrar('portal');
+    setTimeout(function(){
+      if ($('splash').classList.contains('fuera')) return;
+      $('splashMsg').textContent = navigator.onLine === false ? 'Sin internet. Revisa la conexión.' : 'Está tardando más de lo normal…';
+      $('reintentar').classList.remove('oculto');
+    }, 20000);
+  }
+  window.seguirNavegador = function(){ lsSet('mc_navegador', '1'); arrancar(); };
+
+  // Android: botón "Instalar app" cuando Chrome lo permite
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); pedidoInstalar = e;
+    $('bInstalar').classList.remove('oculto'); $('pasosAndroidMan').classList.add('oculto');
+  });
+  $('bInstalar').addEventListener('click', function(){
+    if (!pedidoInstalar) return;
+    pedidoInstalar.prompt();
+    pedidoInstalar.userChoice.then(function(r){ if (r && r.outcome === 'accepted') arrancar(); pedidoInstalar = null; });
+  });
+  window.addEventListener('appinstalled', function(){ arrancar(); });
+
+  if ('serviceWorker' in navigator){ window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
+
+  // En el celular, si se abre en el navegador (no instalada), primero se ofrece instalarla
+  if (!esApp && (esIOS || esAndroid) && !lsGet('mc_navegador')){
+    $('splash').classList.add('oculto');
+    $('instalar').classList.remove('oculto');
+    $(esIOS ? 'pasosIOS' : 'pasosAndroid').classList.remove('oculto');
+  } else {
+    arrancar();
+  }
+})();
+</script>
+</body>
+</html>
