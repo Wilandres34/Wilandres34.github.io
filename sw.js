@@ -1,5 +1,5 @@
 // App MUNDO CASINO 777: guarda la "cáscara" para que abra rápido. Los datos siempre vienen de Google.
-var CACHE = 'mc777-v1';
+var CACHE = 'mc777-v2';
 var ARCHIVOS = ['./', './index.html', './config.js', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon-32.png'];
 
 self.addEventListener('install', function (e) {

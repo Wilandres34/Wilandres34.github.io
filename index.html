@@ -163,6 +163,16 @@
     mostrar(codigo);
     history.pushState({ app: codigo }, '');
   }
+  // Versión nueva: vuelve a cargar ese marco sin el pase (la app sigue con su sesión guardada)
+  function recargar(codigo){
+    var f = F[codigo]; if (!f) return;
+    var src = f.src.replace(/([?&])pase=[^&]*&?/, '$1').replace(/[?&]$/, '');
+    if (src.indexOf('shell=1') < 0) src = conShell(src);
+    if (codigo !== 'portal') $('abriendo').classList.add('si');
+    var listo = function(){ $('abriendo').classList.remove('si'); f.removeEventListener('load', listo); };
+    f.addEventListener('load', function(){ setTimeout(listo, 300); });
+    f.src = src;
+  }
   function volverPortal(){
     $('abriendo').classList.remove('si');
     mostrar('portal');
@@ -177,6 +187,7 @@
     else if (d.mc777 === 'portal') volverPortal();
     else if (d.mc777 === 'salir'){ if (origen !== 'portal') quitar(origen); volverPortal(); }
     else if (d.mc777 === 'portalSalir'){ Object.keys(F).forEach(quitar); volverPortal(); }
+    else if (d.mc777 === 'recargar') recargar(origen);
   });
   // Botón "atrás" del celular: desde una app vuelve al portal
   window.addEventListener('popstate', function(){ if (actual !== 'portal') volverPortal(); });
